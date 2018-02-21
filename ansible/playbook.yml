@@ -6,5 +6,5 @@
   tasks:
     - import_role:
         name: osx-common
-      when: ansible-os-family == 'Darwin'
+      when: ansible_os_family == 'Darwin'
 
