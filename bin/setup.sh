@@ -3,15 +3,17 @@ set -e
 [ -n "$PYENV_DEBUG" ] && set -x
 
 if [ -z "$OX_ROOT" ]; then
-  OX_ROOT="${HOME}/.ox-setup"
+  OX_ROOT="${HOME}/.openstax"
 fi
 
 OX_ANSIBLE=$OX_ROOT/ansible
+OX_ROLE="content_manager"
 
 # Shared functions
 pretty_print() {
 	printf "\n%b\n" "$1"
 }
+
 checkout() {
   [ -d "$2" ] || git clone --depth 1 "$1" "$2"
 }
@@ -21,7 +23,7 @@ pretty_print "Beginning the install"
 # Install Homebrew
 if ! command -v brew &>/dev/null; then
   pretty_print "Installing Homebrew, an OSX package manager, follow the instructions."
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
   pretty_print "You already have Homebrew installed...good job!"
 fi
@@ -44,4 +46,11 @@ checkout "https://github.com/m1yag1/setup-openstax-machine.git" "${OX_ROOT}"
 
 # Run the playbook
 pretty_print "Running the ansible playbook. You will need to enter your password."
-    ansible-playbook -i "${OX_ANSIBLE}/inventory" "${OX_ANSIBLE}/playbook.yml" --ask-become-pass
+ansible-playbook -i "${OX_ANSIBLE}/inventory" "${OX_ANSIBLE}/playbook.yml" --ask-become-pass --extra-vars openstax_role="${OX_ROLE}"
+
+# Everything is done so lets do some cleanup
+pretty_print "We have finished setting up your computer cleaning up ..."
+rm -rf $OX_ROOT
+
+# Done
+pretty_print "Cleanup complete have a great day =)"

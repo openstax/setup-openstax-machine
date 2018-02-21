@@ -1,0 +1,5 @@
+---
+- name: install nebuchadnezzar
+  pip:
+    name: nebuchadnezzar
+    state: latest

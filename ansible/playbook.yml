@@ -1,5 +1,5 @@
 ---
-- name: setup a basic development environment in OSX
+- name: bootstrapping your machine to OpenStax standards
   hosts: localhost
   vars:
     local_home: "{{ lookup('env','HOME') }}"
@@ -7,4 +7,7 @@
     - import_role:
         name: osx-common
       when: ansible_os_family == 'Darwin'
+    - import_role:
+        name: content-manager
+      when: openstax_role == 'content_manager'
 

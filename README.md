@@ -8,7 +8,7 @@
 
 ## Introduction
 
-One of the most important things when starting out in any software project(s) is setting up your development environment. These instructions set out with the goal of configuring an OSX or Linux machine with the basic dependencies needed for the various roles we have at OpenStax. This project attempts to simplify the bootstrapping process so that Content Mangers, Developers, QA Analysts, etc. can start working hard, doing epic stuff.
+One of the most important things when starting out in any software project(s) is setting up your development environment. These instructions set out with the goal of configuring an OSX or Linux machine with the basic dependencies needed for the various roles we have at OpenStax. This project attempts to simplify the bootstrapping process so that Content Mangers, Developers, QA Analysts, etc. can get setup quickly and start doing epic stuff.
 
 ## Getting started
 
