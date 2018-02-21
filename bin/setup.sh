@@ -48,6 +48,7 @@ pretty_print "Installing git"
 brew install git
 
 # Clone the setup-openstax-machine repo
+umask g-w,o-w
 pretty_print "Cloning the installation playbook"
 env git clone --depth=1 https://github.com/m1yag1/setup-openstax-machine $OXDIR || {
     pretty_print "Error: git clone of setup-openstax-machine repo failed\n"
