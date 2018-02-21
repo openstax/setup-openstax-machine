@@ -6,7 +6,7 @@ if [ -z "$OX_ROOT" ]; then
   OX_ROOT="${HOME}/.ox-setup"
 fi
 
-OX_ANSIBLE=$OXDIR/ansible
+OX_ANSIBLE=$OX_ROOT/ansible
 
 # Shared functions
 pretty_print() {
