@@ -40,8 +40,8 @@ brew install git
 
 # Clone the setup-openstax-machine repo
 pretty_print "Cloning the installation playbook"
-checkout "https://github.com/m1yag1/setup-openstax-machine.git"     "${OX_ROOT}"
+checkout "https://github.com/m1yag1/setup-openstax-machine.git" "${OX_ROOT}"
 
 # Run the playbook
 pretty_print "Running the ansible playbook. You will need to enter your password."
-    ansible-playbook -i $OX_ANSIBLE/inventory $OX_ANSIBLE/local_install.yml --ask-become-pass
+    ansible-playbook -i $OX_ANSIBLE/inventory $OX_ANSIBLE/playbook.yml --ask-become-pass
