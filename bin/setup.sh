@@ -1,28 +1,19 @@
 #!/usr/bin/env bash
 set -e
+[ -n "$PYENV_DEBUG" ] && set -x
 
-# Change into the main dir
-cd "$(dirname "$0")"
-cd ..
-
-# Define a hash of roles
-roles=( ["CM"]= "content_manager")
-
-# Setup some variables
-if [ ! -n "$OXDIR"]; then
-  OXDIR=~/.ox-setup
+if [ -z "$OX_ROOT" ]; then
+  OX_ROOT="${HOME}/.ox-setup"
 fi
-OXANSIBLE=$OXDIR/ansible
 
-echo -n "Enter your two letter role at OpenStax from one of these choices:
-\n CM - Content Manager \n"
-read role_input
-
-ROLE=roles[role_input]
+OX_ANSIBLE=$OXDIR/ansible
 
 # Shared functions
 pretty_print() {
 	printf "\n%b\n" "$1"
+}
+checkout() {
+  [ -d "$2" ] || git clone --depth 1 "$1" "$2"
 }
 
 pretty_print "Beginning the install"
@@ -48,13 +39,9 @@ pretty_print "Installing git"
 brew install git
 
 # Clone the setup-openstax-machine repo
-umask g-w,o-w
 pretty_print "Cloning the installation playbook"
-env git clone --depth=1 https://github.com/m1yag1/setup-openstax-machine $OXDIR || {
-    pretty_print "Error: git clone of setup-openstax-machine repo failed\n"
-    exit 1
-  }
+checkout "https://github.com/m1yag1/setup-openstax-machine.git"     "${OX_ROOT}"
 
 # Run the playbook
 pretty_print "Running the ansible playbook. You will need to enter your password."
-    ansible-playbook -i $OXANSIBLE/inventory $OXANSIBLE/local_install.yml --ask-become-pass
+    ansible-playbook -i $OX_ANSIBLE/inventory $OX_ANSIBLE/local_install.yml --ask-become-pass
