@@ -1,0 +1,10 @@
+---
+- name: setup a basic development environment in OSX
+  hosts: localhost
+  vars:
+    local_home: "{{ lookup('env','HOME') }}"
+  tasks:
+    - import_role:
+        name: osx-common
+      when: ansible-os-family == 'Darwin'
+
