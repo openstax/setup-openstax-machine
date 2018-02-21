@@ -1,0 +1,5 @@
+---
+- name: ensure homebrew is up to date
+  homebrew:
+    state: latest
+    update_homebrew: yes
