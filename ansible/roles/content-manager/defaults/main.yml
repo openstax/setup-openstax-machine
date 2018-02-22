@@ -1,0 +1,24 @@
+atom_packages: 
+  - intentions
+  - busy-signal
+  - linter
+  - linter-ui-default
+  - linter-autocomplete-jing
+
+
+atom_config:
+  "*":
+    core:
+      customFileTypes:
+        "text.xml":
+          - "index.cnxml"
+    "linter-autocomplete-jing":
+      displaySchemaWarnings: true
+      rules: 
+        - priority: 1
+          test: 
+            pathRegex: ".cnxml$"
+          outcome:
+            schemaProps: 
+              - lang: "rng"
+                path: "~/Downloads/cnxml-validation/cnxml/xml/cnxml/schema/rng/0.7/cnxml-jing.rng"

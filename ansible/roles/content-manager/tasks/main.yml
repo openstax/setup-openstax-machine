@@ -1,5 +1,30 @@
 ---
-- name: install nebuchadnezzar
+- name: install java via brew
+  homebrew_cask:
+    name: java
+    state: present
+
+- name: install nebuchadnezzar via pip
   pip:
     name: nebuchadnezzar
-    state: latest
+    state: present
+
+- name: install atom editor via brew
+  homebrew_cask:
+    name: atom
+    state: present
+    install_options: 'appdir=/Applications'
+
+- name: install atom packages via shell command
+  shell: >
+    apm list --bare | grep -E '{{ item }}@' && echo 'Already installed.'
+    || apm install '{{ item }}'
+  register: apm_result
+  with_items: "{{ atom_packages }}"
+  changed_when: "'Already installed.' not in apm_result.stdout"
+
+- name: copy over the atom config
+  template: 
+    src: config.cson.j2
+    dest: '~/.atom/config.cson'
+    mode: u=rw,go=
