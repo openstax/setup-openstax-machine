@@ -61,13 +61,13 @@ brew install git
 
 # Clone the setup-openstax-machine repo
 pretty_print "Cloning the installation playbook"
-checkout "https://github.com/m1yag1/setup-openstax-machine.git" "${OX_ROOT}"
+checkout "https://github.com/openstax/setup-openstax-machine.git" "${OX_ROOT}"
 
 # Run the playbook
 pretty_print "Running the ansible playbook. You will need to enter your password."
 ansible-playbook -i "${OX_ANSIBLE}/inventory" "${OX_ANSIBLE}/playbook.yml" --ask-become-pass --extra-vars openstax_role="${OX_ROLE}"
 
-# Everything is done so lets do some cleanup
+# Everything is done so let's do some cleanup
 pretty_print "We have finished setting up your computer.\nCleaning up ...\n"
 rm -rf $OX_ROOT
 brew uninstall ansible
