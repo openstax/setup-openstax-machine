@@ -13,7 +13,7 @@ checkout() {
 
 pretty_print "Role Selection Menu \n------------------------------------------------"
 # Select menu for Openstax job role
-PS3='Make an OpenStax role selection: '
+PS3='Enter the number of the role you would like to install: '
 roles=("content_manager" "Quit")
 select role in "${roles[@]}"
 do
@@ -26,7 +26,7 @@ do
     "Quit")
       exit 1
       ;;
-    *) echo invalid option;;
+    *) pretty_print "Please make sure you enter the number beside the role.";;
   esac
 done
 
@@ -45,6 +45,8 @@ if ! command -v brew &>/dev/null; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
   pretty_print "You already have Homebrew installed...good job!"
+  pretty_print "Checking to make sure Homebrew is up to date"
+  brew update
 fi
 
 # Install Python3
