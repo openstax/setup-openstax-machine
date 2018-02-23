@@ -11,7 +11,24 @@ checkout() {
   [ -d "$2" ] || git clone --depth 1 "$1" "$2"
 }
 
-OX_ROLE="content_manager"
+pretty_print "Role Selection Menu \n------------------------------------------------"
+# Select menu for Openstax job role
+PS3='Make an OpenStax role selection: '
+roles=("content_manager" "Quit")
+select role in "${roles[@]}"
+do
+  case $role in
+    "content_manager")
+      OX_ROLE=$role
+      pretty_print "Your computer will be configured for ${OX_ROLE}"
+      break
+      ;;
+    "Quit")
+      exit 1
+      ;;
+    *) echo invalid option;;
+  esac
+done
 
 # Set important folder path variables
 if [ -z "$OX_ROOT" ]; then
