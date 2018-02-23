@@ -11,7 +11,24 @@ checkout() {
   [ -d "$2" ] || git clone --depth 1 "$1" "$2"
 }
 
-OX_ROLE="content_manager"
+pretty_print "Role Selection Menu \n------------------------------------------------"
+# Select menu for Openstax job role
+PS3='Enter the number of the role you would like to install: '
+roles=("content_manager" "Quit")
+select role in "${roles[@]}"
+do
+  case $role in
+    "content_manager")
+      OX_ROLE=$role
+      pretty_print "Your computer will be configured for ${OX_ROLE}"
+      break
+      ;;
+    "Quit")
+      exit 1
+      ;;
+    *) pretty_print "Please make sure you enter the number beside the role.";;
+  esac
+done
 
 # Set important folder path variables
 if [ -z "$OX_ROOT" ]; then
@@ -28,6 +45,8 @@ if ! command -v brew &>/dev/null; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
   pretty_print "You already have Homebrew installed...good job!"
+  pretty_print "Checking to make sure Homebrew is up to date"
+  brew update
 fi
 
 # Install Python3
