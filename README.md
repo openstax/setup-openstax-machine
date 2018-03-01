@@ -16,5 +16,34 @@ Open a terminal window and run the following command:
 
     bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/master/bin/setup.sh)
 
-Follow the instruction prompts given by the script
+Follow the instruction prompts given by the script.
 
+## Troubleshooting Homebrew
+
+If you encounter any issues installing/updating Homebrew you may need to follow their [troubleshooting guide](https://github.com/Homebrew/brew/blob/master/docs/Troubleshooting.md)
+
+## Developing on the playbook
+
+### Clone this repository to your project directory
+
+    git clone git@github.com:openstax/setup-openstax-machine.git
+
+### Create a virtualenv
+
+    python3 -m venv .venv
+
+### Activate the virtualenv
+
+    source .venv/bin/activate
+
+### Install the dependencies
+    
+    pip install -r requirements.txt
+
+### Edit the playbook directly
+
+Open any of the playbook files into your editor of choice
+
+### Run the playbook independently
+
+    ansible-playbook -i ansible/inventory ansible/playbook.yml
