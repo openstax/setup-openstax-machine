@@ -22,8 +22,8 @@ Follow the instruction prompts given by the script
 
 ## Development testing
 
-To test the code found in a Pull Request, determine the branch name for the Pull Request and then replace `${BRANCH_NAME}` in the command below:
+To test the code found in a Pull Request, determine the branch name for the Pull Request and then replace `${GIT_BRANCH}` in the command below:
 
 ```sh
-bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/${BRANCH_NAME}/bin/setup.sh)
+GIT_BRANCH="shiny-new-feature" bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/${GIT_BRANCH}/bin/setup.sh)
 ```
