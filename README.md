@@ -32,6 +32,10 @@ If you encounter any issues installing/updating Homebrew you may need to follow 
 
     cd setup-openstax-machine
 
+### Checkout the appropriate branch (if necessary)
+
+    git checkout <branch_name>
+
 ### Create a virtualenv
 
     python3 -m venv .venv
@@ -50,4 +54,4 @@ Open any of the playbook files into your editor of choice
 
 ### Run the playbook independently
 
-    ansible-playbook -i ansible/inventory ansible/playbook.yml
+    ansible-playbook -i ansible/inventory ansible/playbook.yml --extra-vars openstax_role=content_manager --ask-become-pass
