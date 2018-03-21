@@ -1,0 +1,31 @@
+neb_home: ~/.neb
+
+cnxml_rng_download_path: ~/Downloads
+cnxml_rng_version: 2.1.0
+cnxml_rng_download_url: "https://github.com/Connexions/cnxml/archive/v{{ cnxml_rng_version }}.tar.gz"
+cnxml_rng_extract_path: "{{ neb_home }}"
+cnxml_rng_pkg_name: "cnxml-{{ cnxml_rng_version }}.tar.gz"
+
+atom_packages: 
+  - intentions
+  - busy-signal
+  - linter
+  - linter-ui-default
+  - linter-autocomplete-jing
+
+atom_config:
+  "*":
+    core:
+      customFileTypes:
+        "text.xml":
+          - "index.cnxml"
+    "linter-autocomplete-jing":
+      displaySchemaWarnings: true
+      rules: 
+        - priority: 1
+          test: 
+            pathRegex: ".cnxml$"
+          outcome:
+            schemaProps: 
+              - lang: "rng"
+                path: "~/Downloads/cnxml-validation/cnxml/xml/cnxml/schema/rng/0.7/cnxml-jing.rng"
