@@ -25,5 +25,5 @@ Follow the instruction prompts given by the script
 To test the code found in a Pull Request, determine the branch name for the Pull Request and then replace `${BRANCH_NAME}` in the command below:
 
 ```sh
-bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/master/${BRANCH_NAME}/setup.sh)
+bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/${BRANCH_NAME}/bin/setup.sh)
 ```
