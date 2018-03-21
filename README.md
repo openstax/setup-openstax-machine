@@ -14,7 +14,16 @@ One of the most important things when starting out in any software project(s) is
 
 Open a terminal window and run the following command:
 
-    bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/master/bin/setup.sh)
+```sh  
+bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/master/bin/setup.sh)
+```
 
 Follow the instruction prompts given by the script
 
+## Development testing
+
+To test the code found in a Pull Request, determine the branch name for the Pull Request and then replace `${BRANCH_NAME}` in the command below:
+
+```sh
+bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/master/${BRANCH_NAME}/setup.sh)
+```
