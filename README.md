@@ -22,7 +22,7 @@ Follow the instruction prompts given by the script.
 
 If you encounter any issues installing/updating Homebrew you may need to follow their [troubleshooting guide](https://github.com/Homebrew/brew/blob/master/docs/Troubleshooting.md)
 
-## Developing on the playbook
+## Developing and testing the playbook
 
 ### Clone this repository to your project directory
 
@@ -50,4 +50,4 @@ Open any of the playbook files into your editor of choice
 
 ### Run the playbook independently
 
-    ansible-playbook -i ansible/inventory ansible/playbook.yml
+    ansible-playbook -i ansible/inventory ansible/playbook.yml --extra-vars openstax_role=content_manager
