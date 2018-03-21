@@ -1,4 +1,16 @@
 ---
+- name: check if the neb home directory exists
+  stat:
+    path: "{{ neb_home }}"
+  register: neb_home
+
+- name: create neb home directory
+  file:
+    state: directory
+    path: "{{ neb_home }}"
+    mode: 0750
+  when: not neb_home.stat.exists
+
 - name: install java via brew
   homebrew_cask:
     name: java
@@ -15,6 +27,17 @@
     state: present
     install_options: 'appdir=/Applications'
 
+- name: Fetch the cnx RNG Schema files
+  get_url:
+    dest: "{{ cnxml_rng_download_path }}/{{ cnxml_rng_pkg_name }}" 
+    url: "{{ cnxml_rng_download_url }}"
+    mode: 0755
+
+- name: untar the cnxml archive
+  unarchive:
+    src: "{{ cnxml_rng_download_path }}/{{ cnxml_rng_pkg_name }}"
+    dest: "{{ neb_home }}"
+
 - name: install atom packages via shell command
   shell: >
     apm list --bare | grep -E '{{ item }}@' && echo 'Already installed.'
@@ -25,6 +48,7 @@
 
 - name: copy over the atom config
   template: 
+    remote_src: yes
     src: config.cson.j2
     dest: '~/.atom/config.cson'
     mode: u=rw,go=
