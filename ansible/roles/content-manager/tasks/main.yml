@@ -1,4 +1,9 @@
 ---
+- name: install java via brew
+  homebrew_cask:
+    name: java
+    state: present
+
 - name: install nebuchadnezzar
   pip:
     name: nebuchadnezzar
