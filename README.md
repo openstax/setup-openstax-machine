@@ -26,7 +26,11 @@ If you encounter any issues installing/updating Homebrew you may need to follow 
 
 ### Clone this repository to your project directory
 
-    git clone git@github.com:openstax/setup-openstax-machine.git
+    git clone https://github.com/openstax/setup-openstax-machine.git
+
+### Change into the project directory
+
+    cd setup-openstax-machine
 
 ### Create a virtualenv
 
@@ -37,7 +41,7 @@ If you encounter any issues installing/updating Homebrew you may need to follow 
     source .venv/bin/activate
 
 ### Install the dependencies
-    
+
     pip install -r requirements.txt
 
 ### Edit the playbook directly
