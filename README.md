@@ -14,7 +14,9 @@ One of the most important things when starting out in any software project(s) is
 
 Open a terminal window and run the following command:
 
-    bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/master/bin/setup.sh)
+```sh  
+bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/master/bin/setup.sh)
+```
 
 Follow the instruction prompts given by the script.
 
@@ -55,3 +57,12 @@ Open any of the playbook files into your editor of choice
 ### Run the playbook independently
 
     ansible-playbook -i ansible/inventory ansible/playbook.yml --extra-vars openstax_role=content_manager --ask-become-pass
+
+## Testing
+
+To test the code found in a Pull Request, determine the branch name for the Pull Request and then replace `${GIT_BRANCH}` in the command below:
+
+```sh
+GIT_BRANCH="shiny-new-feature" bash <(curl -s https://raw.githubusercontent.com/openstax/setup-openstax-machine/${GIT_BRANCH}/bin/setup.sh)
+```
+

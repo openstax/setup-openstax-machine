@@ -9,6 +9,9 @@ pretty_print() {
 
 checkout() {
   [ -d "$2" ] || git clone --depth 1 "$1" "$2"
+  if [[ ${GIT_BRANCH} ]]; then
+    git checkout "${GIT_BRANCH}"
+  fi
 }
 
 pretty_print "Role Selection Menu \n------------------------------------------------"
