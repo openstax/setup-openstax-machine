@@ -15,7 +15,7 @@ checkout() {
 }
 
 install_or_upgrade_package() {
-	if brew info $1 | grep --quiet 'Not Installed'; then
+	if brew info $1 | grep --quiet 'Not installed'; then
 	    pretty_print "Installing $1"
 			brew install $1
 	else
