@@ -14,6 +14,20 @@ checkout() {
   fi
 }
 
+install_or_upgrade_package() {
+	if brew info $1 | grep --quiet 'Not installed'; then
+	    pretty_print "Installing $1"
+			brew install $1
+	else
+		if [ "$2" = true ]; then
+			pretty_print "New version of $1 found, upgrading ..."
+      brew upgrade $1 || true
+		else
+	    pretty_print "$1 detected, skipping ..."
+		fi
+	fi
+}
+
 pretty_print "Role Selection Menu \n------------------------------------------------"
 # Select menu for Openstax job role
 PS3='Enter the number of the role you would like to install: '
@@ -53,16 +67,13 @@ else
 fi
 
 # Install Python3
-pretty_print "Installing Python 3.6"
-brew install python3
-
-# Install Python3
-pretty_print "Installing ansible"
-brew install ansible
+install_or_upgrade_package "python3"
 
 # Install git
-pretty_print "Installing git"
-brew install git
+install_or_upgrade_package "git" true
+
+# pip install ansible
+pip install -q ansible
 
 # Clone the setup-openstax-machine repo
 pretty_print "Cloning the installation playbook"
@@ -75,7 +86,6 @@ ansible-playbook -i "${OX_ANSIBLE}/inventory" "${OX_ANSIBLE}/playbook.yml" --ask
 # Everything is done so let's do some cleanup
 pretty_print "We have finished setting up your computer.\nCleaning up ...\n"
 rm -rf $OX_ROOT
-brew uninstall ansible
 
 # Done
 pretty_print "Cleanup complete.\n\nHave a great day =)"
