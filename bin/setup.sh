@@ -31,7 +31,7 @@ install_or_upgrade_package() {
 pretty_print "Role Selection Menu \n------------------------------------------------"
 # Select menu for Openstax job role
 PS3='Enter the number of the role you would like to install: '
-roles=("content_manager" "osx-common" "Quit")
+roles=("content_manager" "osx_common" "Quit")
 select role in "${roles[@]}"
 do
   case $role in
