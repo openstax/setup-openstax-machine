@@ -31,11 +31,16 @@ install_or_upgrade_package() {
 pretty_print "Role Selection Menu \n------------------------------------------------"
 # Select menu for Openstax job role
 PS3='Enter the number of the role you would like to install: '
-roles=("content_manager" "Quit")
+roles=("content_manager" "osx-common" "Quit")
 select role in "${roles[@]}"
 do
   case $role in
     "content_manager")
+      OX_ROLE=$role
+      pretty_print "Your computer will be configured for ${OX_ROLE}"
+      break
+      ;;
+    "osx_common")
       OX_ROLE=$role
       pretty_print "Your computer will be configured for ${OX_ROLE}"
       break
