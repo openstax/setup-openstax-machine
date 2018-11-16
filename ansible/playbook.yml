@@ -10,4 +10,7 @@
     - import_role:
         name: content-manager
       when: openstax_role == 'content_manager'
+    - import_role:
+        name: test-automation
+      when: openstax_role == 'automation_engineer'
 
