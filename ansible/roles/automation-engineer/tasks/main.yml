@@ -17,6 +17,7 @@
       export PYENV_ROOT="$HOME/.pyenv"
       export PYENV_VERSION=3.7.0
       export PATH="$PYENV_ROOT/bin:$PATH"
+      export PYENV_VIRTUALENV_DISABLE_PROMPT=1
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
   when: ansible_env.SHELL == '/bin/bash'
@@ -58,3 +59,10 @@
     dest: /Applications
     mode: 0755
     copy: no
+
+- name: Add chromedriver to your path
+  blockinfile:
+    path: "{{ local_home }}/.bash_profile"
+    create: yes
+    block: export PATH="{{ ae_chromedriver_path }}:$PATH"
+  when: ansible_env.SHELL == '/bin/bash'
