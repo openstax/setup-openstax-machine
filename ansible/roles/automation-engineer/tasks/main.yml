@@ -23,9 +23,19 @@
       eval "$(pyenv virtualenv-init -)"
   when: ansible_env.SHELL == '/bin/bash'
 
+- name: install libmagic (required for neb)
+  homebrew:
+    name: libmagic
+    state: present
+
 - name: install docker
   homebrew_cask:
     name: docker
+    state: present
+
+- name: install chrome
+  homebrew_cask:
+    name: google-chrome
     state: present
 
 - name: register the path of the python version for pyenv
