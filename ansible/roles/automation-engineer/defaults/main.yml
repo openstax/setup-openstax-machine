@@ -1,0 +1,7 @@
+---
+ae_python_version: 3.7.0
+ae_pyenv_versions_path: "{{ local_home }}/.pyenv/versions"
+ae_projects_home: "{{ local_home }}/Documents/Projects"
+ae_project_repos:
+  - https://github.com/openstax/cnx-automation
+  - https://github.com/openstax/os-automation

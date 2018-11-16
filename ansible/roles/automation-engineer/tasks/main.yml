@@ -1,0 +1,30 @@
+---
+- name: install pyenv for managing python versions
+  homebrew:
+    name: pyenv
+    state: present
+
+- name: install pyenv-virtualenv for managing virtualenvs with pyenv
+  homebrew:
+    name: pyenv-virtualenv
+    state: latest
+
+- name: install docker
+  homebrew_cask:
+    name: docker
+    state: present
+
+- name: register the path of the python version for pyenv
+  stat:
+    path: "{{ ae_pyenv_versions_path }}/{{ ae_python_version }}"
+    register: pyenv_python
+
+- name: "install {{ ae_python_version }} if it is not currently installed"
+  shell: "pyenv install {{ ae_python_version }}"
+  when: not pyenv_python.stat.exists
+
+- name: clone down the automation engineer project repos from GitHub
+  git:
+    repo: "{{ item }}"
+    dest: "{{ ae_projects_home}}"
+  with_items: "{{ ae_automation_repos }}"
