@@ -17,7 +17,7 @@
 - name: register the path of the python version for pyenv
   stat:
     path: "{{ ae_pyenv_versions_path }}/{{ ae_python_version }}"
-    register: pyenv_python
+  register: pyenv_python
 
 - name: "install {{ ae_python_version }} if it is not currently installed"
   shell: "pyenv install {{ ae_python_version }}"
