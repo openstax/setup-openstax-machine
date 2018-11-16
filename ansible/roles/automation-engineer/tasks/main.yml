@@ -21,7 +21,6 @@
       eval "$(pyenv virtualenv-init -)"
   when: ansible_env.SHELL == '/bin/bash'
 
-
 - name: install docker
   homebrew_cask:
     name: docker
@@ -46,3 +45,16 @@
     repo: "{{ item }}"
     dest: "{{ ae_projects_home}}/{{ item.split('/')[-1] }}"
   with_items: "{{ ae_project_repos }}"
+
+- name: Get the latest release for chromedriver
+  uri:
+    url: https://chromedriver.storage.googleapis.com/LATEST_RELEASE
+    return_content: yes
+  register: chromedriver_latest
+
+- name: Install chromedriver
+  unarchive:
+    src: "https://chromedriver.storage.googleapis.com/{{ chromedriver_latest.content | trim }}/chromedriver_mac64.zip"
+    dest: /Applications
+    mode: 0755
+    copy: no
