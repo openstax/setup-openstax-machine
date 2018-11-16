@@ -9,6 +9,14 @@
     name: pyenv-virtualenv
     state: latest
 
+- name: Activate pyenv and pyenv-virtualenv plugin in bash script
+  blockinfile:
+    path: /etc/network/interfaces
+    block: |
+      iface eth0 inet static
+          address 192.0.2.23
+          netmask 255.255.255.0
+
 - name: install docker
   homebrew_cask:
     name: docker
@@ -19,7 +27,7 @@
     path: "{{ ae_pyenv_versions_path }}/{{ ae_python_version }}"
   register: pyenv_python
 
-- name: "install {{ ae_python_version }} if it is not currently installed"
+- name: "install pyenv managed Python version {{ ae_python_version }}"
   shell: "pyenv install {{ ae_python_version }}"
   when: not pyenv_python.stat.exists
 
@@ -32,4 +40,4 @@
   git:
     repo: "{{ item }}"
     dest: "{{ ae_projects_home}}"
-  with_items: "{{ ae_automation_repos }}"
+  with_items: "{{ ae_project_repos }}"
