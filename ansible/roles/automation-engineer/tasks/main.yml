@@ -1,0 +1,86 @@
+---
+- name: install pyenv for managing python versions
+  homebrew:
+    name: pyenv
+    state: present
+
+- name: install pyenv-virtualenv for managing virtualenvs with pyenv
+  homebrew:
+    name: pyenv-virtualenv
+    state: latest
+
+- name: Activate pyenv and pyenv-virtualenv plugin in bash script
+  blockinfile:
+    path: "{{ local_home }}/.bash_profile"
+    create: yes
+    marker: "# {mark} Managed by Ansible task: pyenv"
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PYENV_VERSION=3.7.0
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
+  when: ansible_env.SHELL == '/bin/bash'
+
+- name: install libmagic (required for neb)
+  homebrew:
+    name: libmagic
+    state: present
+
+- name: install docker
+  homebrew_cask:
+    name: docker
+    state: present
+
+- name: install chrome
+  homebrew_cask:
+    name: google-chrome
+    state: present
+
+- name: register the path of the python version for pyenv
+  stat:
+    path: "{{ ae_pyenv_versions_path }}/{{ ae_python_version }}"
+  register: pyenv_python
+
+- name: "install pyenv managed Python version {{ ae_python_version }}"
+  shell: "pyenv install {{ ae_python_version }}"
+  when: not pyenv_python.stat.exists
+
+- name: Create Projects directory in user's documents directory
+  file:
+    path: "{{ ae_projects_home }}"
+    state: directory
+
+- name: clone down the automation engineer project repos from GitHub
+  git:
+    repo: "{{ item }}"
+    dest: "{{ ae_projects_home}}/{{ item.split('/')[-1] }}"
+  with_items: "{{ ae_project_repos }}"
+
+- name: Get the latest release for chromedriver
+  uri:
+    url: https://chromedriver.storage.googleapis.com/LATEST_RELEASE
+    return_content: yes
+  register: chromedriver_latest
+
+- name: register the path of the chromedriver
+  stat:
+    path: "{{ ae_chromedriver_path }}/chromedriver"
+  register: chromedriver_path
+
+- name: Install chromedriver
+  unarchive:
+    src: "https://chromedriver.storage.googleapis.com/{{ chromedriver_latest.content | trim }}/chromedriver_mac64.zip"
+    dest: "{{ ae_chromedriver_path }}"
+    mode: 0755
+    copy: no
+  when: not chromedriver_path.stat.exists
+
+- name: Add chromedriver to your path
+  blockinfile:
+    path: "{{ local_home }}/.bash_profile"
+    create: yes
+    marker: "# {mark} Managed by Ansible task: chromedriver"
+    block: export PATH="{{ ae_chromedriver_path }}:$PATH"
+  when: ansible_env.SHELL == '/bin/bash'

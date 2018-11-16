@@ -10,6 +10,9 @@ pretty_print() {
 checkout() {
   [ -d "$2" ] || git clone --depth 1 "$1" "$2"
   if [[ ${GIT_BRANCH} ]]; then
+    cd "${OX_ROOT}"
+    git remote set-branches origin '*'
+    git fetch
     git checkout "${GIT_BRANCH}"
   fi
 }
@@ -31,16 +34,21 @@ install_or_upgrade_package() {
 pretty_print "Role Selection Menu \n------------------------------------------------"
 # Select menu for Openstax job role
 PS3='Enter the number of the role you would like to install: '
-roles=("content_manager" "osx_common" "Quit")
+roles=("content_manager" "osx_common" "automation_engineer" "Quit")
 select role in "${roles[@]}"
 do
   case $role in
+  "osx_common")
+      OX_ROLE=$role
+      pretty_print "Your computer will be configured for ${OX_ROLE}"
+      break
+      ;;
     "content_manager")
       OX_ROLE=$role
       pretty_print "Your computer will be configured for ${OX_ROLE}"
       break
       ;;
-    "osx_common")
+    "automation_engineer")
       OX_ROLE=$role
       pretty_print "Your computer will be configured for ${OX_ROLE}"
       break
@@ -73,6 +81,10 @@ fi
 
 # Install Python3
 install_or_upgrade_package "python3"
+
+# Install Python2
+
+install_or_upgrade_package "python@2"
 
 # Install git
 install_or_upgrade_package "git" true
