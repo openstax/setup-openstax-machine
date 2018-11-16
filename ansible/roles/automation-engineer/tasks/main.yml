@@ -44,5 +44,5 @@
 - name: clone down the automation engineer project repos from GitHub
   git:
     repo: "{{ item }}"
-    dest: "{{ ae_projects_home}}"
+    dest: "{{ ae_projects_home}}/{{ item.split('/')[-1] }}"
   with_items: "{{ ae_project_repos }}"
