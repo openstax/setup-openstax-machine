@@ -10,6 +10,7 @@ pretty_print() {
 checkout() {
   [ -d "$2" ] || git clone --depth 1 "$1" "$2"
   if [[ ${GIT_BRANCH} ]]; then
+    cd "${OX_ROOT}"
     git checkout "${GIT_BRANCH}"
   fi
 }
