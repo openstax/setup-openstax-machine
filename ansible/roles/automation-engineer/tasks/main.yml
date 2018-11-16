@@ -11,11 +11,15 @@
 
 - name: Activate pyenv and pyenv-virtualenv plugin in bash script
   blockinfile:
-    path: /etc/network/interfaces
+    path: "{{ local_home }}/.bash_profile"
     block: |
-      iface eth0 inet static
-          address 192.0.2.23
-          netmask 255.255.255.0
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PYENV_VERSION=3.7.0
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
+  when: ansible_env.SHELL == '/bin/bash'
+
 
 - name: install docker
   homebrew_cask:
