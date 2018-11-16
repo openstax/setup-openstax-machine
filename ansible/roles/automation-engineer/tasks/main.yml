@@ -23,6 +23,11 @@
   shell: "pyenv install {{ ae_python_version }}"
   when: not pyenv_python.stat.exists
 
+- name: Create Projects directory in user's documents directory
+  file:
+    path: "{{ ae_projects_home }}"
+    state: directory
+
 - name: clone down the automation engineer project repos from GitHub
   git:
     repo: "{{ item }}"
