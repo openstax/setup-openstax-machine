@@ -13,7 +13,7 @@
   blockinfile:
     path: "{{ local_home }}/.bash_profile"
     create: yes
-    marker: "# Managed by Ansible task: pyenv"
+    marker: "# {mark} Managed by Ansible task: pyenv"
     block: |
       export PYENV_ROOT="$HOME/.pyenv"
       export PYENV_VERSION=3.7.0
@@ -56,8 +56,8 @@
 
 - name: register the path of the chromedriver
   stat:
-    path: "{{ ae_chromedriver_path}}/chromedriver"
-  register: pyenv_python
+    path: "{{ ae_chromedriver_path }}/chromedriver"
+  register: chromedriver_path
 
 - name: Install chromedriver
   unarchive:
@@ -65,11 +65,12 @@
     dest: "{{ ae_chromedriver_path }}"
     mode: 0755
     copy: no
+  when: not chromedriver_path.stat.exists
 
 - name: Add chromedriver to your path
   blockinfile:
     path: "{{ local_home }}/.bash_profile"
     create: yes
-    marker: "# Managed by Ansible task: chromedriver"
+    marker: "# {mark} Managed by Ansible task: chromedriver"
     block: export PATH="{{ ae_chromedriver_path }}:$PATH"
   when: ansible_env.SHELL == '/bin/bash'
