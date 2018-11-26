@@ -4,6 +4,11 @@
     name: java
     state: present
 
+- name: install libmagic
+  homebrew:
+    name: libmagic
+    state: present
+
 - name: install nebuchadnezzar
   pip:
     name: nebuchadnezzar
