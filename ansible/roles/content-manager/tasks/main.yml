@@ -5,7 +5,7 @@
     state: present
 
 - name: install libmagic
-  brew:
+  homebrew:
     name: libmagic
     state: present
 
