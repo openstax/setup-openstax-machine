@@ -28,11 +28,6 @@
     name: libmagic
     state: present
 
-- name: install docker
-  homebrew_cask:
-    name: docker
-    state: present
-
 - name: install chrome
   homebrew_cask:
     name: google-chrome
